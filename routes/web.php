@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+use App\Http\Controllers\UserController;
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
@@ -21,6 +23,13 @@ Route::group(['middleware' => 'auth'], function(){
     Route::get('/', function () {
         return view('dashboard');
     });
+
+    Route::get('/users',[UserController::class, 'index'])->name('users');
+    Route::get('/users/add',[UserController::class, 'create'])->name('users.create');
+    Route::post('/users/add',[UserController::class, 'store'])->name('users.store');
+    Route::get('/users/edit/{id}',[UserController::class, 'edit'])->name('users.edit');
+    Route::put('/users/edit',[UserController::class, 'update'])->name('users.update');
+    Route::get('/users/{id}',[UserController::class, 'delete'])->name('users.delete');
 });
 
 require __DIR__.'/auth.php';
