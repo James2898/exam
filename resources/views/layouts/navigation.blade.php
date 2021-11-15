@@ -15,20 +15,30 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
-                    @if (Auth::user()->role < 2)
-                    <x-nav-link :href="route('examinees')" :active="request()->routeIs('login')">
-                        {{ __('Examinee') }}
-                    </x-nav-link>
+                    {{-- Admin Only --}}
+                    @if (Auth::user()->role < 1)
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('login')">
                         {{ __('Exam') }}
-                    </x-nav-link>
-                    @endif
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('login')">
-                        {{ __('Subject') }}
                     </x-nav-link>
                     <x-nav-link :href="route('users')" :active="request()->routeIs('users')">
                         {{ __('Users') }}
                     </x-nav-link>
+                    @endif
+                    {{-- Staff --}}
+                    @if (Auth::user()->role < 2)
+                    <x-nav-link :href="route('examinees')" :active="request()->routeIs('examinees')">
+                        {{ __('Examinee') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('login')">
+                        {{ __('Subject') }}
+                    </x-nav-link>
+                    @endif
+                    {{-- Examinee --}}
+                    @if (Auth::user()->role == 2)
+                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('login')">
+                        {{ __('Exam') }}
+                    </x-nav-link>
+                    @endif
                 </div>
             </div>
 
@@ -80,9 +90,33 @@
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
+
+            {{-- Admin Only --}}
+            @if (Auth::user()->role < 1)
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('login')">
-                {{ __('Dashboard') }}
+                {{ __('Exam') }}
             </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('users')" :active="request()->routeIs('users')">
+                {{ __('Users') }}
+            </x-responsive-nav-link>
+            @endif
+
+            {{-- Staff --}}
+            @if (Auth::user()->role < 2)
+            <x-responsive-nav-link :href="route('examinees')" :active="request()->routeIs('examinees')">
+                {{ __('Examinee') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('login')">
+                {{ __('Subject') }}
+            </x-responsive-nav-link>
+            @endif
+
+            {{-- Examinee --}}
+            @if (Auth::user()->role == 2)
+            <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('login')">
+                {{ __('Exam') }}
+            </x-responsive-nav-link>
+            @endif
         </div>
 
         <!-- Responsive Settings Options -->

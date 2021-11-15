@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Examinee;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
@@ -34,15 +35,38 @@ class RegisteredUserController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'lrn'       => 'required|string|max:12',
+            'fname'     => 'required|string|max:64',
+            'mname'     => 'required|string|max:64',
+            'lname'     => 'required|string|max:64',
+            'birthdate' => 'required|date',
+            'gender'    => 'required|integer',
+            'email'     => 'required|string|email|max:255|unique:users,email',
+            'address'   => 'required|string|max:255',
+            'mobile'    => 'required|digits:11|unique:users,mobile',
+            'college'   => 'required|integer',
+            'course'    => 'required|integer'
         ]);
 
         $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
+            'fname'     => $request->fname,
+            'mname'     => $request->mname,
+            'lname'     => $request->lname,
+            'email'     => $request->email,
+            'address'   => $request->address,
+            'password'  => Hash::make($request->password),
+            'mobile'    => $request->mobile,
+            'role'      => 2,
+        ]);
+
+        Examinee::create([
+            'lrn'       => $request->lrn,
+            'user_id'   => $user->id,
+            'birthdate' => $request->birthdate,
+            'gender'    => $request->gender,
+            'college'   => $request->college,
+            'course'    => $request->course,
+            'status'    => 0,
         ]);
 
         event(new Registered($user));
