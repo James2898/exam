@@ -18,6 +18,12 @@ return [
             1   =>  'Female'
         ]
     ],
+    'subject' => [
+        'status' => [
+            'inactive'  =>  ['no' => 0, 'name' => 'Inactive'],
+            'active'    =>  ['no' => 1, 'name' => 'Active']
+        ]
+    ],
     'college' => [
         1   => 'College of Arts and Sciences',
         2   => 'College of Agriculture, Forestry, Environment and Natural Resources',

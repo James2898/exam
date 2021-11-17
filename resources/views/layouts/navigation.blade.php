@@ -29,7 +29,7 @@
                     <x-nav-link :href="route('examinees')" :active="request()->routeIs('examinees')">
                         {{ __('Examinee') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('login')">
+                    <x-nav-link :href="route('subjects')" :active="request()->routeIs('subjects')">
                         {{ __('Subject') }}
                     </x-nav-link>
                     @endif

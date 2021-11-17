@@ -6,7 +6,7 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
-
+use Carbon\Carbon;
 
 class DatabaseSeeder extends Seeder
 {
@@ -58,6 +58,15 @@ class DatabaseSeeder extends Seeder
             'college'   =>  1,
             'course'    =>  1,
             'status'    =>  0,
+        ]);
+
+        DB::table('subjects')->insert([
+            'code'      =>  'ENG2021',
+            'name'      =>  'ENGLISH',
+            'status'    =>  1,
+            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+            'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
+
         ]);
     }
 }
