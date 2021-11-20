@@ -24,6 +24,12 @@ return [
             'active'    =>  ['no' => 1, 'name' => 'Active']
         ]
     ],
+    'question' => [
+        'type' => [
+            'identification'    => ['no' => 1, 'name' => 'Identification'],
+            'multiple'          => ['no' => 2, 'name' => 'Multiple Choice']
+        ]
+    ],
     'college' => [
         1   => 'College of Arts and Sciences',
         2   => 'College of Agriculture, Forestry, Environment and Natural Resources',
