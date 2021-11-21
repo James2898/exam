@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ExamineeController;
 use App\Http\Controllers\SubjectController;
+use App\Http\Controllers\QuestionController;
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -56,6 +57,16 @@ Route::group(['middleware' => 'auth'], function(){
         Route::get('/subjects/edit/{id}',[SubjectController::class, 'edit'])->name('subjects.edit');
         Route::put('/subjects/edit',[SubjectController::class, 'update'])->name('subjects.update');
         Route::get('/subjects/{id}',[SubjectController::class, 'delete'])->name('subjects.delete');
+
+        // Questions
+        Route::get('/questions/identification/{id}',[QuestionController::class, 'identification'])->name('questions.identification');
+        Route::get('/questions/multiple/{id}',[QuestionController::class, 'multiple'])->name('questions.multiple');
+        Route::get('/questions/view',[QuestionController::class, 'view'])->name('questions.view');
+        Route::get('/questions/add/{id}',[QuestionController::class, 'create'])->name('questions.create');
+        Route::post('/questions/add',[QuestionController::class, 'store'])->name('questions.store');
+        Route::get('/questions/edit/{id}',[QuestionController::class, 'edit'])->name('questions.edit');
+        Route::put('/questions/edit',[QuestionController::class, 'update'])->name('questions.update');
+        Route::get('/questions/delete/{id}',[QuestionController::class, 'delete'])->name('questions.delete');
     });
 });
 

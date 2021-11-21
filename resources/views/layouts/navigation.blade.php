@@ -106,7 +106,7 @@
             <x-responsive-nav-link :href="route('examinees')" :active="request()->routeIs('examinees')">
                 {{ __('Examinee') }}
             </x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('login')">
+            <x-responsive-nav-link :href="route('subjects')" :active="request()->routeIs('subjects')">
                 {{ __('Subject') }}
             </x-responsive-nav-link>
             @endif
