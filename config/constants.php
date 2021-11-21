@@ -74,12 +74,40 @@ return [
             3   =>  'Bachelor of Secondary Education',
             4   =>  'Bachelor of Special Needs Education',
             5   =>  'Bachelor of Technology and Livelihood Education',
-            6   =>  'BS Hospitality Management (formerly BS Hotel and Restaurant Management)',
+            6   =>  'BS Hospitality Management',
             7   =>  'BS Tourism Management',
             8   =>  'Teacher Certificate Program',
             9   =>  'Science High School',
             10  =>  'Elementary Education',
             11  =>  'Pre-Elementary Education',
+        ],
+        6   => [
+            1   =>  'BS Agricultural and Biosystems Engineering',
+            2   =>  'BS Architecture',
+            3   =>  'BS Civil Engineering',
+            4   =>  'BS Computer Engineering',
+            5   =>  'BS Computer Science',
+            6   =>  'BS Electrical Engineering',
+            7   =>  'BS Electronics Engineering',
+            8   =>  'BS Industrial Engineering',
+            9   =>  'BS Industrial Technology Major in Automotive Technology',
+            10  =>  'BS Industrial Technology Major in Electrical Technology',
+            11  =>  'BS Industrial Technology Major in Electronics Technology',
+            12  => 'BS Information Technology',
+            13  => 'BS Office Administration',
+        ],
+        7   => [
+            'BS Medical Technology',
+            'BS Midwifery',
+            'BS Nursing',
+            'Diploma in Midwifery',
+        ],
+        8   => [
+            'Bachelor of Physical Education',
+            'Bachelor of Exercise and Sports Sciences',
+        ],
+        9   => [
+            'Doctor of Veterinary Medicine'
         ]
     ]
 ];
