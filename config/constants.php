@@ -5,6 +5,16 @@ return [
         1   =>  'Staff',
         2   =>  'Student'
     ],
+    'exam' => [
+        'status' => [
+            1   => 'Draft',
+            2   => 'Scheduled',
+            3   => 'In Progress',
+            4   => 'Review',
+            5   => 'Published'
+        ],
+        'duration' => [15,30,60,90,120]
+    ],
     'examinee' => [
         'status' => [
             0   =>  'Review',

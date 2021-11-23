@@ -17,7 +17,7 @@
                     </x-nav-link>
                     {{-- Admin Only --}}
                     @if (Auth::user()->role < 1)
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('login')">
+                    <x-nav-link :href="route('admin.exams')" :active="request()->routeIs('admin.exams')">
                         {{ __('Exam') }}
                     </x-nav-link>
                     <x-nav-link :href="route('users')" :active="request()->routeIs('users')">
@@ -93,7 +93,7 @@
 
             {{-- Admin Only --}}
             @if (Auth::user()->role < 1)
-            <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('login')">
+            <x-responsive-nav-link :href="route('admin.exams')" :active="request()->routeIs('admin.exams')">
                 {{ __('Exam') }}
             </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('users')" :active="request()->routeIs('users')">
