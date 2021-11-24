@@ -45,5 +45,25 @@
                 </x-button>
             </div>
         </form>
+        <div class="mt-4">
+            <a href="#" class="inline-flex items-center px-4 py-2 bg-yellow-400 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-yellow-300 active:bg-yellow-500 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150'" onclick="fillup(0)">Admin</a>
+            <a href="#" class="inline-flex items-center px-4 py-2 bg-green-400 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-green-300 active:bg-green-500 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150'" onclick="fillup(1)">Staff</a>
+            <a href="#" class="inline-flex items-center px-4 py-2 bg-blue-400 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-300 active:bg-blue-500 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150'" onclick="fillup(2)">Examinee</a>
+        </div>
     </x-auth-card>
+    <script>
+        function fillup(role){
+            var email = document.getElementById('email');
+            var password = document.getElementById('password');
+
+            if(role == 0) {
+                email.value = 'admin@example.com'
+            } else if (role == 1) {
+                email.value = 'staff@example.com'
+            } else {
+                email.value = 'examinee1@example.com'
+            }
+            password.value = 'password'
+        }
+    </script>
 </x-guest-layout>
