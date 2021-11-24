@@ -13,20 +13,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ExamineeController;
 use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\AdminExamController;
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
-
 Route::group(['middleware' => 'auth'], function(){
-    Route::get('/', function () {
-        return view('dashboard');
-    });
+    Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
     // Admin Only
     Route::group(['middleware' => 'role:0'], function() {

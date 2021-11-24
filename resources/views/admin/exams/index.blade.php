@@ -17,7 +17,7 @@
         </a>
       </div>
       <div class=" overflow-x-auto bg-white shadow-md rounded my-6">
-        <table class="min-w-max w-full table-fixed">
+        <table class="w-full table-fixed">
             <thead>
                 <tr class="bg-green-500 text-white uppercase text-sm leading-normal">
                     <th class="py-3 px-6 text-center">Exam ID</th>

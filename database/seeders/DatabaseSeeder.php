@@ -40,26 +40,68 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make('password'),
         ]);
 
+        // Examinee
         $examinee_id = DB::table('users')->insertGetId([
             'fname'     =>  'Pablo',
             'mname'     =>  'Mendoza',
             'lname'     =>  'Santos',
             'address'   =>  'Sample Address',
             'mobile'    =>  '12345678903',
-            'email'     =>  'examinee@example.com',
+            'email'     =>  'examinee1@example.com',
             'role'      =>  2,
             'password'  =>  Hash::make('password'),
         ]);
 
-        // Examinee
         DB::table('examinees')->insert([
-            'lrn'       =>  '198765210721',
+            'lrn'       =>  '1234567890001',
             'user_id'   =>  $examinee_id,
             'birthdate' =>  '2000-11-20',
             'gender'    =>  1,
             'college'   =>  1,
             'course'    =>  1,
-            'status'    =>  0,
+            'status'    =>  0, //Review
+        ]);
+
+        $examinee_id = DB::table('users')->insertGetId([
+            'fname'     =>  'Mateo',
+            'mname'     =>  'Ventura',
+            'lname'     =>  'Rizal',
+            'address'   =>  'Sample Address',
+            'mobile'    =>  '12345678904',
+            'email'     =>  'examinee2@example.com',
+            'role'      =>  2,
+            'password'  =>  Hash::make('password'),
+        ]);
+
+        DB::table('examinees')->insert([
+            'lrn'       =>  '1234567890002',
+            'user_id'   =>  $examinee_id,
+            'birthdate' =>  '2000-11-20',
+            'gender'    =>  1,
+            'college'   =>  2,
+            'course'    =>  2,
+            'status'    =>  1, // Examinee
+        ]);
+
+        $examinee_id = DB::table('users')->insertGetId([
+            'fname'     =>  'Thomas',
+            'mname'     =>  'Badeo',
+            'lname'     =>  'Torre',
+            'address'   =>  'Sample Address',
+            'mobile'    =>  '12345678905',
+            'email'     =>  'examinee3@example.com',
+            'role'      =>  2,
+            'password'  =>  Hash::make('password'),
+        ]);
+
+        DB::table('examinees')->insert([
+            'lrn'       =>  '1234567890003',
+            'user_id'   =>  $examinee_id,
+            'birthdate' =>  '2000-11-20',
+            'gender'    =>  1,
+            'college'   =>  2,
+            'course'    =>  2,
+            'status'    =>  4, // Passed
         ]);
 
         // Subject
