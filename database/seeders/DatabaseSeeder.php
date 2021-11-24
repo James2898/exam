@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        // Users
         DB::table('users')->insert([
             'fname' =>  'Juan',
             'mname' =>  'Reyes',
@@ -50,6 +51,7 @@ class DatabaseSeeder extends Seeder
             'password'  =>  Hash::make('password'),
         ]);
 
+        // Examinee
         DB::table('examinees')->insert([
             'lrn'       =>  '198765210721',
             'user_id'   =>  $examinee_id,
@@ -60,6 +62,7 @@ class DatabaseSeeder extends Seeder
             'status'    =>  0,
         ]);
 
+        // Subject
         $subject_id = DB::table('subjects')->insertGetId([
             'code'      =>  'FIL2021',
             'name'      =>  'Filipino',
@@ -69,7 +72,32 @@ class DatabaseSeeder extends Seeder
         ]);
         
         $subject = DB::select('select code from subjects where id = ?',[$subject_id]);
+
+        DB::table('subjects')->insertGetId([
+            'code'      =>  'ENG2021',
+            'name'      =>  'English',
+            'status'    =>  1,
+            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+            'updated_at' => Carbon::now()->format('Y-m-d H:i:s'), 
+        ]);
+
+        DB::table('subjects')->insertGetId([
+            'code'      =>  'MATH2021',
+            'name'      =>  'Math',
+            'status'    =>  1,
+            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+            'updated_at' => Carbon::now()->format('Y-m-d H:i:s'), 
+        ]);
+
+        DB::table('subjects')->insertGetId([
+            'code'      =>  'HIST2021',
+            'name'      =>  'History',
+            'status'    =>  1,
+            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+            'updated_at' => Carbon::now()->format('Y-m-d H:i:s'), 
+        ]);
         
+        // Subject Questions
         $question_id = DB::table('questions')->insertGetId([
             'subject_id'    =>  $subject_id,
             'type'          =>  1,
@@ -96,5 +124,139 @@ class DatabaseSeeder extends Seeder
             'update questions set question_id = ? where id = ?', [$subject[0]->code."-".(Str::padleft($question_id,3,'0')), $question_id]
         );
 
+        $question_id = DB::table('questions')->insertGetId([
+            'subject_id'    =>  $subject_id,
+            'type'          =>  2,
+            'description'   => 'What is the capital of the Philippines?',
+            'option_1'      => 'Manila',
+            'option_2'      => 'Cavite',
+            'option_3'      => 'Cebu',
+            'option_4'      => 'Laguna',
+            'answer'        => 1,
+        ]);
+
+        DB::update(
+            'update questions set question_id = ? where id = ?', [$subject[0]->code."-".(Str::padleft($question_id,3,'0')), $question_id]
+        );
+
+        $question_id = DB::table('questions')->insertGetId([
+            'subject_id'    =>  $subject_id,
+            'type'          =>  2,
+            'description'   => 'What is the capital of the Philippines?',
+            'option_1'      => 'Manila',
+            'option_2'      => 'Cavite',
+            'option_3'      => 'Cebu',
+            'option_4'      => 'Laguna',
+            'answer'        => 1,
+        ]);
+
+        DB::update(
+            'update questions set question_id = ? where id = ?', [$subject[0]->code."-".(Str::padleft($question_id,3,'0')), $question_id]
+        );
+
+        $question_id = DB::table('questions')->insertGetId([
+            'subject_id'    =>  $subject_id,
+            'type'          =>  2,
+            'description'   => 'What is the capital of the Philippines?',
+            'option_1'      => 'Manila',
+            'option_2'      => 'Cavite',
+            'option_3'      => 'Cebu',
+            'option_4'      => 'Laguna',
+            'answer'        => 1,
+        ]);
+
+        DB::update(
+            'update questions set question_id = ? where id = ?', [$subject[0]->code."-".(Str::padleft($question_id,3,'0')), $question_id]
+        );
+
+        $question_id = DB::table('questions')->insertGetId([
+            'subject_id'    =>  $subject_id,
+            'type'          =>  2,
+            'description'   => 'What is the capital of the Philippines?',
+            'option_1'      => 'Manila',
+            'option_2'      => 'Cavite',
+            'option_3'      => 'Cebu',
+            'option_4'      => 'Laguna',
+            'answer'        => 1,
+        ]);
+
+        DB::update(
+            'update questions set question_id = ? where id = ?', [$subject[0]->code."-".(Str::padleft($question_id,3,'0')), $question_id]
+        );
+
+        $question_id = DB::table('questions')->insertGetId([
+            'subject_id'    =>  $subject_id,
+            'type'          =>  2,
+            'description'   => 'What is the capital of the Philippines?',
+            'option_1'      => 'Manila',
+            'option_2'      => 'Cavite',
+            'option_3'      => 'Cebu',
+            'option_4'      => 'Laguna',
+            'answer'        => 1,
+        ]);
+
+        DB::update(
+            'update questions set question_id = ? where id = ?', [$subject[0]->code."-".(Str::padleft($question_id,3,'0')), $question_id]
+        );
+
+        $question_id = DB::table('questions')->insertGetId([
+            'subject_id'    =>  $subject_id,
+            'type'          =>  2,
+            'description'   => 'What is the capital of the Philippines?',
+            'option_1'      => 'Manila',
+            'option_2'      => 'Cavite',
+            'option_3'      => 'Cebu',
+            'option_4'      => 'Laguna',
+            'answer'        => 1,
+        ]);
+
+        DB::update(
+            'update questions set question_id = ? where id = ?', [$subject[0]->code."-".(Str::padleft($question_id,3,'0')), $question_id]
+        );
+
+        $question_id = DB::table('questions')->insertGetId([
+            'subject_id'    =>  $subject_id,
+            'type'          =>  2,
+            'description'   => 'What is the capital of the Philippines?',
+            'option_1'      => 'Manila',
+            'option_2'      => 'Cavite',
+            'option_3'      => 'Cebu',
+            'option_4'      => 'Laguna',
+            'answer'        => 1,
+        ]);
+
+        DB::update(
+            'update questions set question_id = ? where id = ?', [$subject[0]->code."-".(Str::padleft($question_id,3,'0')), $question_id]
+        );
+
+        $question_id = DB::table('questions')->insertGetId([
+            'subject_id'    =>  $subject_id,
+            'type'          =>  2,
+            'description'   => 'What is the capital of the Philippines?',
+            'option_1'      => 'Manila',
+            'option_2'      => 'Cavite',
+            'option_3'      => 'Cebu',
+            'option_4'      => 'Laguna',
+            'answer'        => 1,
+        ]);
+
+        DB::update(
+            'update questions set question_id = ? where id = ?', [$subject[0]->code."-".(Str::padleft($question_id,3,'0')), $question_id]
+        );
+
+
+        $exam_id = DB::table('exams')->insertGetId([
+            'subject_id'    => $subject_id,
+            'description'   => 'Exam Batch Q1',
+            'duration'      => 5,
+            'qty'           => 10,
+            'start_datetime'    => '2020-01-01 13:00:00',
+            'end_datetime'  => '2020-01-01 17:00:00',
+            'status'        => 1,
+        ]);
+
+        DB::update(
+            'update exams set exam_id = ? where id = ?', [Carbon::now()->format('Y').(Str::padleft($exam_id,3,'0')), $exam_id]
+        );
     }
 }

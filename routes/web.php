@@ -17,6 +17,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\ExamineeController;
 use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\QuestionController;
+use App\Http\Controllers\AdminExamController;
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -35,6 +36,13 @@ Route::group(['middleware' => 'auth'], function(){
         Route::get('/users/edit/{id}',[UserController::class, 'edit'])->name('users.edit');
         Route::put('/users/edit',[UserController::class, 'update'])->name('users.update');
         Route::get('/users/{id}',[UserController::class, 'delete'])->name('users.delete');
+
+        Route::get('/admin/exam',[AdminExamController::class, 'index'])->name('admin.exams');
+        Route::get('/admin/exam/add',[AdminExamController::class, 'create'])->name('admin.exams.create');
+        Route::post('/admin/exam/add',[AdminExamController::class, 'store'])->name('admin.exams.store');
+        Route::get('/admin/exam/edit/{id}',[AdminExamController::class, 'edit'])->name('admin.exams.edit');
+        Route::put('/admin/exam/edit',[AdminExamController::class, 'update'])->name('admin.exams.update');
+        Route::get('/admin/exam/{id}',[AdminExamController::class, 'delete'])->name('admin.exams.delete');
     });
 
     // Adming and Staff
