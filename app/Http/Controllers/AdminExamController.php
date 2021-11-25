@@ -7,7 +7,9 @@ use Config;
 use DateTime;
 use Carbon\Carbon;
 use App\Models\Exam;
-use App\Models\User;
+use App\Models\Subject;
+use App\Models\Form;
+use App\Models\Question;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -23,6 +25,63 @@ class AdminExamController extends Controller
         $exams = DB::table('exams')
             ->get();
         return view('admin.exams.index', compact('exams'));
+    }
+
+    public function forms($exam_id)
+    {
+        $exam = Exam::find($exam_id);
+        $subjects = Subject::whereIn('id',explode(',',$exam->subject_id))->get();
+
+        $exam_subjects = explode(',', $exam->subject_id);
+
+        $forms = Form::where('exam_id',$exam_id)
+            ->join('questions','questions.id','=','forms.question_id')
+            ->orderBy('forms.subject_id')
+            ->get();
+        $subject_questions = Question::whereIn('subject_id',explode(',',$exam->subject_id))->get();
+        $exam_questions = [];
+        $questions = [];
+        
+        foreach ($subject_questions as $item) {
+            $questions += [$item->subject_id => array()];
+        }
+        foreach ($forms as $item) {
+            $exam_questions += [$item->subject_id => array()];
+        }
+
+        foreach ($subject_questions as $item) {
+            $subject_id = $item->subject_id;
+            array_push($questions[$subject_id],array(
+                'type'    => $item->type,
+                'question_id'        => $item->id,
+                'question'  => $item->description,
+                'options'   => array($item->option_1,$item->option_2,$item->option_3,$item->option_4),
+                'answer'    => $item->answer
+            ));
+        }
+
+        foreach ($forms as $item) {
+            $subject_id = $item->subject_id;
+            $exam_questions[$subject_id] += [$item->id => $item->id];
+        }
+
+        return view('admin.exams.forms', compact(['exam','subjects','exam_subjects','questions','exam_questions']));
+    }
+
+    public function toggleAssign(request $request)
+    {
+        $exam = Exam::find($request->exam_id);
+        $form = Form::where('question_id',$request->question_id);
+        if(count($form->get())) {
+            $form->delete();
+        }else {
+            Form::create([
+                'exam_id'       => $exam->id,
+                'subject_id'    => $request->subject_id,
+                'question_id'   => $request->question_id,
+            ]);
+        }
+        return redirect(route('admin.exams.forms',$exam->id))->with('alert', 'Question Assigned to Exam!');
     }
 
     public function create(){

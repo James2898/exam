@@ -53,10 +53,33 @@ class DatabaseSeeder extends Seeder
         ]);
 
         DB::table('examinees')->insert([
-            'lrn'       =>  '1234567890001',
+            'lrn'       =>  '12345678901',
             'user_id'   =>  $examinee_id,
             'birthdate' =>  '2000-11-20',
             'gender'    =>  1,
+            'marital'   =>  'Single',
+            'prev_school' => 'Old School',
+            'strand'    => 'STEM',
+            'perm_address' => 'Permanent Address',
+            'cur_address' => 'Current Address',
+            'no_siblings' => 3,
+            'order_siblings' => 3,
+            'weight'    => '80kg',
+            'height'    => '192cm',
+            'nationality'  => 'Filipino',
+            'religion'  => 'Christian',
+            'f_fname'   => 'Ffname',
+            'f_mname'   => 'Fmname',
+            'f_lname'   => 'Flname',
+            'f_occupation' => 'Web Developer',
+            'f_mobile'  => '12345678902',
+            'm_fname'   => 'Mfname',
+            'm_mname'   => 'Mmname',
+            'm_lname'   => 'Mlname',
+            'm_occupation' => 'Chef',
+            'm_mobile'  => '12345678902',
+            'emergency_name' => 'Sample Name',
+            'emergency_mobile' => '12345678902',
             'college'   =>  1,
             'course'    =>  1,
             'status'    =>  0, //Review
@@ -74,10 +97,33 @@ class DatabaseSeeder extends Seeder
         ]);
 
         DB::table('examinees')->insert([
-            'lrn'       =>  '1234567890002',
+            'lrn'       =>  '12345678902',
             'user_id'   =>  $examinee_id,
             'birthdate' =>  '2000-11-20',
             'gender'    =>  1,
+            'marital'   =>  'Single',
+            'prev_school' => 'Old School',
+            'strand'    => 'STEM',
+            'perm_address' => 'Permanent Address',
+            'cur_address' => 'Current Address',
+            'no_siblings' => 3,
+            'order_siblings' => 3,
+            'weight'    => '80kg',
+            'height'    => '192cm',
+            'nationality'  => 'Filipino',
+            'religion'  => 'Christian',
+            'f_fname'   => 'Ffname',
+            'f_mname'   => 'Fmname',
+            'f_lname'   => 'Flname',
+            'f_occupation' => 'Web Developer',
+            'f_mobile'  => '12345678902',
+            'm_fname'   => 'Mfname',
+            'm_mname'   => 'Mmname',
+            'm_lname'   => 'Mlname',
+            'm_occupation' => 'Chef',
+            'm_mobile'  => '12345678902',
+            'emergency_name' => 'Sample Name',
+            'emergency_mobile' => '12345678902',
             'college'   =>  2,
             'course'    =>  2,
             'status'    =>  1, // Examinee
@@ -95,10 +141,33 @@ class DatabaseSeeder extends Seeder
         ]);
 
         DB::table('examinees')->insert([
-            'lrn'       =>  '1234567890003',
+            'lrn'       =>  '12345678903',
             'user_id'   =>  $examinee_id,
             'birthdate' =>  '2000-11-20',
             'gender'    =>  1,
+            'marital'   =>  'Single',
+            'prev_school' => 'Old School',
+            'strand'    => 'STEM',
+            'perm_address' => 'Permanent Address',
+            'cur_address' => 'Current Address',
+            'no_siblings' => 3,
+            'order_siblings' => 3,
+            'weight'    => '80kg',
+            'height'    => '192cm',
+            'nationality'  => 'Filipino',
+            'religion'  => 'Christian',
+            'f_fname'   => 'Ffname',
+            'f_mname'   => 'Fmname',
+            'f_lname'   => 'Flname',
+            'f_occupation' => 'Web Developer',
+            'f_mobile'  => '12345678902',
+            'm_fname'   => 'Mfname',
+            'm_mname'   => 'Mmname',
+            'm_lname'   => 'Mlname',
+            'm_occupation' => 'Chef',
+            'm_mobile'  => '12345678902',
+            'emergency_name' => 'Sample Name',
+            'emergency_mobile' => '12345678902',
             'college'   =>  2,
             'course'    =>  2,
             'status'    =>  4, // Passed
@@ -300,5 +369,34 @@ class DatabaseSeeder extends Seeder
         DB::update(
             'update exams set exam_id = ? where id = ?', [Carbon::now()->format('Y').(Str::padleft($exam_id,3,'0')), $exam_id]
         );
+
+        // FORMS
+        DB::table('forms')->insert([
+            [
+                'exam_id'   => 1,
+                'subject_id'    => 1,
+                'question_id'   => 1,
+            ],
+            [
+                'exam_id'   => 1,
+                'subject_id'    => 1,
+                'question_id'   => 2,
+            ],
+            [
+                'exam_id'   => 1,
+                'subject_id'    => 1,
+                'question_id'   => 3,
+            ],
+            [
+                'exam_id'   => 1,
+                'subject_id'    => 1,
+                'question_id'   => 4,
+            ],
+            [
+                'exam_id'   => 1,
+                'subject_id'    => 1,
+                'question_id'   => 5,
+            ],
+        ]);
     }
 }
