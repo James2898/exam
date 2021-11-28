@@ -9,9 +9,8 @@ return [
         'status' => [
             1   => 'Draft',
             2   => 'Scheduled',
-            3   => 'In Progress',
-            4   => 'Review',
-            5   => 'Published'
+            3   => 'Review',
+            4   => 'Published'
         ],
         'duration' => [15,30,60,90,120]
     ],

@@ -35,7 +35,7 @@
                     @endif
                     {{-- Examinee --}}
                     @if (Auth::user()->role == 2)
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('login')">
+                    <x-nav-link :href="route('exams')" :active="request()->routeIs('exams')">
                         {{ __('Exam') }}
                     </x-nav-link>
                     @endif

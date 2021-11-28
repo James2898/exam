@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\Examinee;
 use App\Models\User;
+use App\Models\Exam;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -131,7 +132,8 @@ class ExamineeController extends Controller
             )
             ->orderBy('examinees.id','ASC')
             ->first();
-        return view('examinees.edit', compact('examinee'));
+        $exams = Exam::all();
+        return view('examinees.edit', compact(['examinee','exams']));
     }
 
     public function update(Request $request)
@@ -191,6 +193,7 @@ class ExamineeController extends Controller
 
         $examinee->update([
             'lrn'       => $request->lrn,
+            'exam_id'   => $request->exam_id,
             'birthdate' => $request->birthdate,
             'gender'    => $request->gender,
             'marital'   => $request->marital,

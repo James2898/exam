@@ -14,6 +14,7 @@ class Examinee extends Model
      */
     protected $fillable = [
         'lrn',
+        'exam_id',
         'user_id',
         'birthdate',
         'gender',

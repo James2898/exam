@@ -9,6 +9,8 @@ use Carbon\Carbon;
 use App\Models\Exam;
 use App\Models\Subject;
 use App\Models\Form;
+use App\Models\Examinee;
+use App\Models\ExamineeForm;
 use App\Models\Question;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
@@ -22,8 +24,18 @@ class AdminExamController extends Controller
 {
     public function index()
     {
-        $exams = DB::table('exams')
+        // $exams = DB::table('exams')
+            // ->get();
+        $exams = DB::table('examinee_forms')
+            ->selectRaw('
+                exams.exam_id, examinee_forms.exam_id as has_exam,
+                exams.description, exams.start_datetime, exams.duration, exams.qty,
+                exams.status, exams.id
+            ')
+            ->rightjoin('exams','exams.id','=','examinee_forms.exam_id')
+            ->distinct('exams.exam_id')
             ->get();
+        // dd($exams);
         return view('admin.exams.index', compact('exams'));
     }
 
@@ -82,6 +94,89 @@ class AdminExamController extends Controller
             ]);
         }
         return redirect(route('admin.exams.forms',$exam->id))->with('alert', 'Question Assigned to Exam!');
+    }
+
+    public function results($exam_id){
+        $exam = Exam::find($exam_id);
+        $subjects = Subject::whereIn('subjects.id',explode(',',$exam->subject_id))
+            ->selectRaw('subjects.id, subjects.name, count(forms.subject_id) as questions')
+            ->join('forms','forms.subject_id','=','subjects.id')
+            ->groupBy('subjects.id','subjects.name')
+            ->get();
+
+        // dd($subjects);
+
+        $exam_subjects = explode(',', $exam->subject_id);
+
+        $forms = Form::where('exam_id',$exam_id)
+            ->join('questions','questions.id','=','forms.question_id')
+            ->orderBy('forms.subject_id')
+            ->get();
+        $exam_questions = [];
+
+        foreach ($forms as $item) {
+            $exam_questions += [$item->subject_id => array()];
+        }
+
+        $examinee_forms = DB::table('examinee_forms')
+            ->selectRaw('subject_id as subject_id, count(result) as result')
+            ->where('result',1)
+            ->groupBy('subject_id')
+            ->get();
+        
+        $exam_subjects = DB::table('forms')
+            ->selectRaw('subject_id as subject_id, count(subject_id) as subject_count')
+            ->groupBy('subject_id')
+            ->get();
+
+        $examinee_form = [];
+        foreach ($examinee_forms as $item) {
+            $subject_id = $item->subject_id;
+            // $exam_questions[$subject_id] += [$item->examinee_id => $item->result];
+        }
+
+        foreach ($exam_subjects as $item) {
+            $subject_id = $item->subject_id;
+            $exam_questions[$subject_id] += ['questions' => $item->subject_count];
+        }
+
+        $exam_examinees = DB::table('examinees')
+            ->where('examinees.exam_id','=',$exam_id)
+            ->leftjoin('examinee_forms','examinee_forms.exam_id','=','examinees.exam_id')
+            ->get();
+        $exam_examinees = ExamineeForm::where('exam_id',$exam_id)->get();
+        // dd($examinee->get());
+        $examinees = [];
+        foreach ($exam_examinees as $examinee) {
+            $examinees += [$examinee->examinee_id => array()];
+        }
+
+        $exam_subjects = Form::where('exam_id',$exam_id)
+            ->whereIn('subject_id',explode(',',$exam->subject_id))->get();
+
+        $subject_scores = [];
+        foreach (explode(', ',$exam->subject_id) as $subject_id) {
+            $subject_scores += [$subject_id => array()];
+        }
+
+        // dd($subject_scores);
+
+        foreach ($exam_examinees as $examinee) {
+            // dd($examinee);
+            $subject_scores[$examinee->subject_id] += [$examinee->examinee_id => 0];
+        }
+
+        foreach ($exam_examinees as $examinee) {
+            $subject_scores[$examinee->subject_id][$examinee->examinee_id] += $examinee->result;
+        }
+
+        // dd(count($exam_examinees));
+
+        $examinees = Examinee::where('exam_id',$exam_id)->join('users','users.id','=','examinees.user_id')->get();
+
+        // dd($exam_examinees,$subject_scores);
+
+        return view('admin.exams.results', compact(['exam','subjects','examinees','subject_scores']));
     }
 
     public function create(){
@@ -163,9 +258,19 @@ class AdminExamController extends Controller
             'status'        => $request->status
         ]);
 
+
         return redirect(route('admin.exams.edit',$request->id))->with('alert', 'Exam Updated!');
     }
 
+    public function publish($id)
+    {
+        $exam = Exam::find($id);
+        $exam->update([
+            'status'    => 4
+        ]);
+        return redirect(route('admin.exams'))->with('alert', 'Exam Published!');
+        // dd($exam);
+    }
 
     public function delete($id)
     {
