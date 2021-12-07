@@ -57,31 +57,43 @@
                       {{$exam->qty}}
                     </div>
                   </td>
-                  <td class="py-3 px-6 text-center">
+                  <td class="py-auto px-auto text-center">
                     <div class="flex items-center justify-center">
                       @switch ($exam->status)
                         @case(1)
-                        <span class="bg-purple-200 text-purple-600 py-1 px-3 rounded-full text-xs">
-                          @break
                         @case(2)
-                        <span class="bg-blue-200 text-blue-600 py-1 px-3 rounded-full text-xs">
-                          @break
                         @case(3)
-                        <span class="bg-yellow-200 text-yellow-600 py-1 px-3 rounded-full text-xs">
+                        <a href="{{ route('admin.exams.publish',$exam->id) }}" class="btn mx-auto lg:mx hover:underline bg-green-500 text-white font-bold rounded-full py-1 px-4 focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out" onclick="return confirm('Are you sure to publish this exam?')">Publish Results</a>
                           @break
                         @case(4)
-                        <span class="bg-red-200 text-red-600 py-1 px-3 rounded-full text-xs">
+                          <span class="bg-red-200 text-red-600 py-1 px-3 rounded-full text-xs">
+                              Published
+                          </span>
                           @break
-                        @case(5)
-                        <span class="bg-green-200 text-green-600 py-1 px-3 rounded-full text-xs">
+                        @default
                           @break
                       @endswitch
-                          {{Config::get('constants.exam.status.'.$exam->status)}}
-                        </span>
                     </div>
                   </td>
                   <td class="py-3 px-6 text-center">
-                    <div class="flex item-center justify-center">
+                    <div class="flex items-end justify-end">
+                      @if($exam->has_exam)
+                      <a href="{{route('exam.results', $exam->id)}}">
+                        <div class="w-4 mr-2 transform hover:text-green-500 hover:scale-110">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                        </svg>
+                        </div>
+                      </a>
+                      @endif
+                      <a href="{{route('admin.exams.forms', $exam->id)}}">
+                        <div class="w-4 mr-2 transform hover:text-green-500 hover:scale-110">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-question-lg" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M4.475 5.458c-.284 0-.514-.237-.47-.517C4.28 3.24 5.576 2 7.825 2c2.25 0 3.767 1.36 3.767 3.215 0 1.344-.665 2.288-1.79 2.973-1.1.659-1.414 1.118-1.414 2.01v.03a.5.5 0 0 1-.5.5h-.77a.5.5 0 0 1-.5-.495l-.003-.2c-.043-1.221.477-2.001 1.645-2.712 1.03-.632 1.397-1.135 1.397-2.028 0-.979-.758-1.698-1.926-1.698-1.009 0-1.71.529-1.938 1.402-.066.254-.278.461-.54.461h-.777ZM7.496 14c.622 0 1.095-.474 1.095-1.09 0-.618-.473-1.092-1.095-1.092-.606 0-1.087.474-1.087 1.091S6.89 14 7.496 14Z"/>
+                          </svg>
+                        </div>
+                      </a>
                       <a href="{{route('admin.exams.edit', $exam->id)}}">
                         <div class="w-4 mr-2 transform hover:text-green-500 hover:scale-110">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">

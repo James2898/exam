@@ -42,8 +42,19 @@
             @method('PUT')
             <input type="hidden" name="id" value="{{ $examinee->id }}" />
 
-            {{-- ACADEMIC INFO --}}
             <div class="">
+                <label for="" class="text-2xl">Assign Exam</label>
+                <select name="exam_id" class="w-full h-10 pl-3 pr-6 text-base placeholder-gray-600 
+                border rounded-lg appearance-none focus:shadow-outline" >
+                    <option value="0">Select Exam</option>
+                    @foreach ($exams as $exam)
+                        <option value="{{$exam->id}}" @if($exam->id == $examinee->exam_id) selected @endif>{{ $exam->description }}</option>
+                    @endforeach
+                </select>
+            </div>
+
+            {{-- ACADEMIC INFO --}}
+            <div class="mt-4">
                 <label for="" class="text-2xl">Academic Info</label>
                 <x-label for="lrn" :value="__('LRN')" />
 

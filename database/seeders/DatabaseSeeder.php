@@ -369,5 +369,34 @@ class DatabaseSeeder extends Seeder
         DB::update(
             'update exams set exam_id = ? where id = ?', [Carbon::now()->format('Y').(Str::padleft($exam_id,3,'0')), $exam_id]
         );
+
+        // FORMS
+        DB::table('forms')->insert([
+            [
+                'exam_id'   => 1,
+                'subject_id'    => 1,
+                'question_id'   => 1,
+            ],
+            [
+                'exam_id'   => 1,
+                'subject_id'    => 1,
+                'question_id'   => 2,
+            ],
+            [
+                'exam_id'   => 1,
+                'subject_id'    => 1,
+                'question_id'   => 3,
+            ],
+            [
+                'exam_id'   => 1,
+                'subject_id'    => 1,
+                'question_id'   => 4,
+            ],
+            [
+                'exam_id'   => 1,
+                'subject_id'    => 1,
+                'question_id'   => 5,
+            ],
+        ]);
     }
 }

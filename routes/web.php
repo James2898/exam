@@ -19,6 +19,7 @@ use App\Http\Controllers\ExamineeController;
 use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\AdminExamController;
+use App\Http\Controllers\ExamController;
 
 Route::group(['middleware' => 'auth'], function(){
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
@@ -33,6 +34,8 @@ Route::group(['middleware' => 'auth'], function(){
         Route::get('/users/{id}',[UserController::class, 'delete'])->name('users.delete');
 
         Route::get('/admin/exam',[AdminExamController::class, 'index'])->name('admin.exams');
+        Route::get('/admin/exam/forms/{id}',[AdminExamController::class, 'forms'])->name('admin.exams.forms');
+        Route::get('/admin/exam/toggle',[AdminExamController::class, 'toggleAssign'])->name('admin.exams.toggleAssign');
         Route::get('/admin/exam/add',[AdminExamController::class, 'create'])->name('admin.exams.create');
         Route::post('/admin/exam/add',[AdminExamController::class, 'store'])->name('admin.exams.store');
         Route::get('/admin/exam/edit/{id}',[AdminExamController::class, 'edit'])->name('admin.exams.edit');
@@ -70,7 +73,20 @@ Route::group(['middleware' => 'auth'], function(){
         Route::get('/questions/edit/{id}',[QuestionController::class, 'edit'])->name('questions.edit');
         Route::put('/questions/edit',[QuestionController::class, 'update'])->name('questions.update');
         Route::get('/questions/delete/{id}',[QuestionController::class, 'delete'])->name('questions.delete');
+
+        //Results
+        Route::get('/results/{id}',[AdminExamController::class, 'results'])->name('exam.results');
+        Route::get('/publish/{id}',[AdminExamController::class, 'publish'])->name('admin.exams.publish');
+
     });
+
+    Route::group(['middleware' => 'role:2'], function() {
+        // Examinee
+        Route::get('/exams',[ExamController::class, 'index'])->name('exams');
+        Route::get('/exams/answer/',[ExamController::class, 'answer'])->name('exams.answer');
+        Route::get('/exams/{id}',[ExamController::class, 'questions'])->name('exams.questions');
+    });
+
 });
 
 require __DIR__.'/auth.php';
