@@ -61,28 +61,32 @@
                     <div class="flex items-center justify-center">
                       @switch ($examinee->status)
                         @case(0)
-                        <span class="bg-purple-200 text-purple-600 py-1 px-3 rounded-full text-xs">
-                          @break
+                        <a href="{{ route('examinees.approve',$examinee->id) }}" class="btn mx-auto hover:underline text-xs bg-green-500 text-white font-bold rounded-full py-1 px-4 focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out" onclick="return confirm('Are you sure to approve this examinee?')">Approve</a>
+                        @break
                         @case(1)
                         <span class="bg-blue-200 text-blue-600 py-1 px-3 rounded-full text-xs">
+                          {{Config::get('constants.examinee.status.'.$examinee->status)}}
                           @break
                         @case(2)
                         <span class="bg-yellow-200 text-yellow-600 py-1 px-3 rounded-full text-xs">
+                          {{Config::get('constants.examinee.status.'.$examinee->status)}}
                           @break
                         @case(3)
                         <span class="bg-red-200 text-red-600 py-1 px-3 rounded-full text-xs">
+                          {{Config::get('constants.examinee.status.'.$examinee->status)}}
                           @break
                         @case(4)
                         <span class="bg-green-200 text-green-600 py-1 px-3 rounded-full text-xs">
+                          {{Config::get('constants.examinee.status.'.$examinee->status)}}
                           @break
                       @endswitch
-                          {{Config::get('constants.examinee.status.'.$examinee->status)}}
                         </span>
                     </div>
                   </td>
                   <td class="py-3 px-6 text-center">
                     <div class="flex item-center justify-center">
-                      <a href="{{route('examinees.edit', $examinee->id)}}">
+                      @if($examinee->exam_id)
+                      <a href="{{route('examinee.results', $examinee->id)}}">
                         <div class="w-4 mr-2 transform hover:text-green-500 hover:scale-110">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -90,6 +94,7 @@
                             </svg>
                         </div>
                       </a>
+                      @endif
                       <a href="{{route('examinees.edit', $examinee->id)}}">
                         <div class="w-4 mr-2 transform hover:text-green-500 hover:scale-110">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">

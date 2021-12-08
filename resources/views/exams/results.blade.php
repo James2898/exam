@@ -12,8 +12,13 @@
       @endif
       <div class="mx-auto">
         <h1 class="text-5xl font-bold leading-tight">{{$exam->description}}</h1>
+        @if(isset($examinee))<h4 class="font-bold">{{ $examinee->lname.", ".$examinee->fname." ".substr($examinee->mname,0,1).".";}}</h4>@endif
       </div>
-      
+      @if(Auth::user()->role < 2)
+      <a href="{{ route('examinees') }}" class="btn mx-auto lg:mx-0 hover:underline bg-gray-500 text-white font-bold rounded-full py-1 px-4 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out">
+        Return
+      </a>
+      @endif
       <div class=" overflow-x-auto bg-white shadow-md rounded my-6">
           <table class="w-full table-auto">
               <thead>

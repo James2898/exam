@@ -12,9 +12,12 @@
       @endif
       <div class="mx-auto">
         <h1 class="text-5xl font-bold leading-tight">Exams</h1>
+        @if (Auth::user()->role < 1)    
         <a href="{{ route('admin.exams.create') }}" class="btn mx-auto lg:mx-0 hover:underline bg-green-500 text-white font-bold rounded-full py-2 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out">
         Add
         </a>
+        @endif
+
       </div>
       <div class=" overflow-x-auto bg-white shadow-md rounded my-6">
         <table class="w-full table-fixed">
@@ -24,7 +27,6 @@
                     <th class="py-3 px-6 text-center">Description</th>
                     <th class="py-3 px-6 text-center">Schedule</th>
                     <th class="py-3 px-6 text-center">Time Per Exam</th>
-                    <th class="py-3 px-6 text-center">No. of Items</th>
                     <th class="py-3 px-6 text-center">Status</th>
                     <th class="py-3 px-6 text-center">Actions</th>
                 </tr>
@@ -52,18 +54,27 @@
                       {{$exam->duration}} minutes
                     </div>
                   </td>
-                  <td class="py-3 px-6 text-center">
-                    <div class="flex items-center justify-center">
-                      {{$exam->qty}}
-                    </div>
-                  </td>
                   <td class="py-auto px-auto text-center">
                     <div class="flex items-center justify-center">
                       @switch ($exam->status)
                         @case(1)
+                          <span class="bg-purple-200 text-purple-600 py-1 px-3 rounded-full text-xs">
+                            Draft
+                          </span>
+                          @break
                         @case(2)
+                          <span class="bg-yellow-200 text-yellow-600 py-1 px-3 rounded-full text-xs">
+                            Scheduled
+                          </span>
+                          @break
                         @case(3)
-                        <a href="{{ route('admin.exams.publish',$exam->id) }}" class="btn mx-auto lg:mx hover:underline bg-green-500 text-white font-bold rounded-full py-1 px-4 focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out" onclick="return confirm('Are you sure to publish this exam?')">Publish Results</a>
+                          @if (Auth::user()->role < 1)
+                          <a href="{{ route('admin.exams.publish',$exam->id) }}" class="btn mx-auto lg:mx hover:underline text-xs bg-green-500 text-white font-bold rounded-full py-1 px-4 focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out" onclick="return confirm('Are you sure to publish this exam?')">Publish</a>
+                          @else
+                          <span class="bg-blue-200 text-blue-600 py-1 px-3 rounded-full text-xs">
+                            Published
+                          </span>
+                          @endif
                           @break
                         @case(4)
                           <span class="bg-red-200 text-red-600 py-1 px-3 rounded-full text-xs">
@@ -76,7 +87,7 @@
                     </div>
                   </td>
                   <td class="py-3 px-6 text-center">
-                    <div class="flex items-end justify-end">
+                    <div class="flex items-center justify-center">
                       @if($exam->has_exam)
                       <a href="{{route('exam.results', $exam->id)}}">
                         <div class="w-4 mr-2 transform hover:text-green-500 hover:scale-110">
@@ -94,6 +105,16 @@
                           </svg>
                         </div>
                       </a>
+                      @if(Auth::user()->role < 1)
+                      <a href="{{route('admin.exams.exam_examinees', $exam->id)}}">
+                        <div class="w-4 mr-2 transform hover:text-green-500 hover:scale-110">
+							<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-people-fill" viewBox="0 0 16 16">
+								<path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H7zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+								<path fill-rule="evenodd" d="M5.216 14A2.238 2.238 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.325 6.325 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1h4.216z"/>
+								<path d="M4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z"/>
+							</svg>
+                        </div>
+                      </a>
                       <a href="{{route('admin.exams.edit', $exam->id)}}">
                         <div class="w-4 mr-2 transform hover:text-green-500 hover:scale-110">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -108,6 +129,7 @@
                             </svg>
                         </div>
                       </a>
+                      @endif
                     </div>
                   </td>
                 </tr>

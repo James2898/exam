@@ -61,21 +61,6 @@
             </select>
         </div>
 
-        <div class="mt-4">
-            <x-label for="status" :value="__('Examinee Status')" />
-
-            <select name="status" id="idStatus" class="w-full h-10 pl-3 pr-6 text-base placeholder-gray-600 border rounded-lg appearance-none focus:shadow-outline">
-                <option value="" disabled>
-                    Select Status
-                </option>
-            @for ($i = 0; $i < count(Config::get('constants.examinee.status')) ; $i++)
-                <option value='{{$i}}'>
-                    {{Config::get('constants.examinee.status.'.$i)}}
-                </option>
-            @endfor
-            </select>
-        </div>
-
         {{-- ACADEMIC INFO --}}
         <div class="mt-4">
             <label for="" class="text-2xl">Academic Info</label>

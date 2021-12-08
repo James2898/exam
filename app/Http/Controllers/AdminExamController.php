@@ -83,7 +83,7 @@ class AdminExamController extends Controller
     public function toggleAssign(request $request)
     {
         $exam = Exam::find($request->exam_id);
-        $form = Form::where('question_id',$request->question_id);
+        $form = Form::where('question_id',$request->question_id)->where('exam_id', $request->exam_id);
         if(count($form->get())) {
             $form->delete();
         }else {
@@ -106,7 +106,7 @@ class AdminExamController extends Controller
 
         // dd($subjects);
 
-        $exam_subjects = explode(',', $exam->subject_id);
+        $exam_subjects = explode(', ', $exam->subject_id);
 
         $forms = Form::where('exam_id',$exam_id)
             ->join('questions','questions.id','=','forms.question_id')
@@ -114,8 +114,8 @@ class AdminExamController extends Controller
             ->get();
         $exam_questions = [];
 
-        foreach ($forms as $item) {
-            $exam_questions += [$item->subject_id => array()];
+        foreach ($exam_subjects as $item) {
+            $exam_questions += [$item => array()];
         }
 
         $examinee_forms = DB::table('examinee_forms')
@@ -262,12 +262,62 @@ class AdminExamController extends Controller
         return redirect(route('admin.exams.edit',$request->id))->with('alert', 'Exam Updated!');
     }
 
+
+    public function exam_examinees($exam_id)
+    {
+        $examinees = Examinee::select('examinees.*','users.*')
+            ->join('users','users.id','=','examinees.user_id')
+            ->where('exam_id',$exam_id)
+            ->orwhere('exam_id',0)
+            ->get();
+        $exam = Exam::find($exam_id);
+        return view('admin.exams.examinees',compact('exam','examinees'));
+    }
+
+
+    public function toggleExaminee(request $request)
+    {
+        $examinee_id = $request->examinee_id;
+        $exam_id = $request->exam_id;
+        $examinee = Examinee::find($examinee_id);
+        if($examinee) {
+            if ($examinee->exam_id == $exam_id) {
+                $examinee->update([
+                    'exam_id'   => 0
+                ]);
+            }else {
+                $examinee->update([
+                    'exam_id'   => $exam_id
+                ]);
+            }
+        }
+        return redirect(route('admin.exams.exam_examinees',compact('exam_id')))->with('alert', 'Examinee assigned!');
+    }
+
     public function publish($id)
     {
         $exam = Exam::find($id);
         $exam->update([
             'status'    => 4
         ]);
+
+        $examinees = Examinee::select('users.fname','users.lname','users.mname','users.email')
+            ->join('users','users.id','=','examinees.user_id')
+            ->where('exam_id',$id)
+            ->get();
+
+        foreach ($examinees as $examinee) {
+            $details = array('title' => 'CvSU Online Entrance Exam Results');
+            $name = $examinee->lname.", ".$examinee->fname." ".substr($examinee->mname,0,1).".";
+            $details = [
+                'title' => 'CvSU Online Entrance Exam Results',
+                'name'  => "Hello ".$name.",",
+                'body'  => "I would like to inform you that your Entrance Exam results has been published please login your account to see the results"
+            ];
+           
+            \Mail::to($examinee->email)->send(new \App\Mail\CvSuMail($details));
+        }
+
         return redirect(route('admin.exams'))->with('alert', 'Exam Published!');
         // dd($exam);
     }

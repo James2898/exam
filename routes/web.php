@@ -33,14 +33,6 @@ Route::group(['middleware' => 'auth'], function(){
         Route::put('/users/edit',[UserController::class, 'update'])->name('users.update');
         Route::get('/users/{id}',[UserController::class, 'delete'])->name('users.delete');
 
-        Route::get('/admin/exam',[AdminExamController::class, 'index'])->name('admin.exams');
-        Route::get('/admin/exam/forms/{id}',[AdminExamController::class, 'forms'])->name('admin.exams.forms');
-        Route::get('/admin/exam/toggle',[AdminExamController::class, 'toggleAssign'])->name('admin.exams.toggleAssign');
-        Route::get('/admin/exam/add',[AdminExamController::class, 'create'])->name('admin.exams.create');
-        Route::post('/admin/exam/add',[AdminExamController::class, 'store'])->name('admin.exams.store');
-        Route::get('/admin/exam/edit/{id}',[AdminExamController::class, 'edit'])->name('admin.exams.edit');
-        Route::put('/admin/exam/edit',[AdminExamController::class, 'update'])->name('admin.exams.update');
-        Route::get('/admin/exam/{id}',[AdminExamController::class, 'delete'])->name('admin.exams.delete');
     });
 
     // Adming and Staff
@@ -52,6 +44,7 @@ Route::group(['middleware' => 'auth'], function(){
         Route::get('/examinees/edit/{id}',[ExamineeController::class, 'edit'])->name('examinees.edit');
         Route::put('/examinees/edit',[ExamineeController::class, 'update'])->name('examinees.update');
         Route::get('/examinees/{id}',[ExamineeController::class, 'delete'])->name('examinees.delete');
+        Route::get('/examinees/approve/{id}',[ExamineeController::class,'approve'])->name('examinees.approve');
 
         // Subject
         Route::get('/subjects',[SubjectController::class, 'index'])->name('subjects');
@@ -74,9 +67,20 @@ Route::group(['middleware' => 'auth'], function(){
         Route::put('/questions/edit',[QuestionController::class, 'update'])->name('questions.update');
         Route::get('/questions/delete/{id}',[QuestionController::class, 'delete'])->name('questions.delete');
 
+        Route::get('/admin/exam',[AdminExamController::class, 'index'])->name('admin.exams');
+        Route::get('/admin/exam/forms/{id}',[AdminExamController::class, 'forms'])->name('admin.exams.forms');
+        Route::get('/admin/exam/toggle',[AdminExamController::class, 'toggleAssign'])->name('admin.exams.toggleAssign');
+        Route::get('/admin/exam/add',[AdminExamController::class, 'create'])->name('admin.exams.create');
+        Route::post('/admin/exam/add',[AdminExamController::class, 'store'])->name('admin.exams.store');
+        Route::get('/admin/exam/edit/{id}',[AdminExamController::class, 'edit'])->name('admin.exams.edit');
+        Route::put('/admin/exam/edit',[AdminExamController::class, 'update'])->name('admin.exams.update');
+        Route::get('/admin/exam/toggleExaminee',[AdminExamController::class, 'toggleExaminee'])->name('admin.exams.toggleExaminee');
+        Route::get('/admin/exam/{id}',[AdminExamController::class, 'delete'])->name('admin.exams.delete');
+        Route::get('/admin/exam/examinees/{exam_id}',[AdminExamController::class, 'exam_examinees'])->name('admin.exams.exam_examinees');
         //Results
         Route::get('/results/{id}',[AdminExamController::class, 'results'])->name('exam.results');
         Route::get('/publish/{id}',[AdminExamController::class, 'publish'])->name('admin.exams.publish');
+        Route::get('/examinee/results/{id}',[ExamineeController::class, 'examinee_results'])->name('examinee.results');
 
     });
 

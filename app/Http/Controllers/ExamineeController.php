@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\Examinee;
 use App\Models\User;
+use App\Models\Subject;
+use App\Models\Form;
+use App\Models\Question;
 use App\Models\Exam;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
@@ -230,6 +233,101 @@ class ExamineeController extends Controller
         }
 
         return redirect(route('examinees.edit',$request->id))->with('alert', 'Examinee Updated!');
+    }
+
+    public function examinee_results($examinee_id)
+    {
+        $examinee =  DB::table('examinees')
+            ->where('examinees.id','=',$examinee_id)
+            ->join('users','users.id','=','examinees.user_id')->first();
+        $exam_id = $examinee->exam_id;
+        $exam = Exam::find($exam_id);
+        $subjects = Subject::whereIn('id',explode(',',$exam->subject_id))->get();
+
+        $exam_subjects = explode(',', $exam->subject_id);
+
+        $forms = Form::where('exam_id',$exam_id)
+            ->join('questions','questions.id','=','forms.question_id')
+            ->orderBy('forms.subject_id')
+            ->get();
+        $subject_questions = Question::whereIn('subject_id',explode(',',$exam->subject_id))->get();
+        $exam_questions = [];
+        $questions = [];
+        
+        foreach ($subject_questions as $item) {
+            $questions += [$item->subject_id => array()];
+        }
+        foreach ($forms as $item) {
+            $exam_questions += [$item->subject_id => array()];
+        }
+
+        foreach ($subject_questions as $item) {
+            $subject_id = $item->subject_id;
+            array_push($questions[$subject_id],array(
+                'type'    => $item->type,
+                'question_id'        => $item->id,
+                'question'  => $item->description,
+                'options'   => array($item->option_1,$item->option_2,$item->option_3,$item->option_4),
+                'answer'    => $item->answer
+            ));
+        }
+        
+        $examinee_forms = DB::table('examinee_forms')
+            ->selectRaw('subject_id as subject_id, count(result) as result')
+            ->where('examinee_id',$examinee->user_id)
+            ->where('result',1)
+            ->groupBy('subject_id')
+            ->groupBy('examinee_id')
+            ->get();
+
+        $exam_subjects = DB::table('forms')
+            ->selectRaw('subject_id as subject_id, count(subject_id) as subject_count')
+            ->groupBy('subject_id')
+            ->get();
+
+        $examinee_form = [];
+        foreach ($examinee_forms as $item) {
+            $subject_id = $item->subject_id;
+            $exam_questions[$subject_id] += ['score' => $item->result];
+        }
+
+        foreach ($forms as $item) {
+            if(!isset($exam_questions[$item->subject_id]['score'])) {
+                $exam_questions[$item->subject_id] += ['score' => 0];
+            }
+        }
+
+        foreach ($exam_subjects as $item) {
+            $subject_id = $item->subject_id;
+            $exam_questions[$subject_id] += ['questions' => $item->subject_count];
+        }
+
+        // dd($exam_questions);
+
+        return view('exams.results', compact(['examinee','exam','subjects','exam_subjects','questions','exam_questions']));
+    }
+
+    public function approve($examinee_id)
+    {
+        $examinee = DB::table('examinees')
+            ->where('examinees.id',$examinee_id)
+            ->join('users','users.id','=','examinees.user_id');
+
+        $examinee->update([
+            'examinees.status' => 1
+        ]);
+        $examinee = $examinee->first();
+        $name = $examinee->lname.", ".$examinee->fname." ".substr($examinee->mname,0,1).".";
+        $details = [
+            'title' => 'CvSU Online Entrance Exam',
+            'name'  => "Hello ".$name.",",
+            'body'  => "Your application for an entrance examination has been approved, please wait for further notifications regarding your examination date"
+        ];
+
+        \Mail::to($examinee->email)->send(new \App\Mail\CvSuMail($details));
+
+        return redirect(route('examinees'))->with('alert', 'Examinee Approved!');
+
     }
 
     public function delete($id)

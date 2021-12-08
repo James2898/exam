@@ -68,7 +68,6 @@ class RegisteredUserController extends Controller
             'mobile'    => 'required|digits:11|unique:users,mobile',
             'college'   => 'required|integer',
             'course'    => 'required|integer',
-            'status'    => 'required|integer'
         ]);
 
         $user = User::create([

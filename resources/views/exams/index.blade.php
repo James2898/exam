@@ -64,7 +64,7 @@
                 </tr>
                 @else
                   <tr>
-                    <td colspan="4" class="text-center text-2xl">
+                    <td colspan="5" class="text-center text-2xl">
                       No available exam at the moment
                     </td>
                   </tr>

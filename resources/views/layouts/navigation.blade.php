@@ -17,15 +17,15 @@
                     </x-nav-link>
                     {{-- Admin Only --}}
                     @if (Auth::user()->role < 1)
-                    <x-nav-link :href="route('admin.exams')" :active="request()->routeIs('admin.exams')">
-                        {{ __('Exam') }}
-                    </x-nav-link>
                     <x-nav-link :href="route('users')" :active="request()->routeIs('users')">
                         {{ __('Users') }}
                     </x-nav-link>
                     @endif
                     {{-- Staff --}}
                     @if (Auth::user()->role < 2)
+                    <x-nav-link :href="route('admin.exams')" :active="request()->routeIs('admin.exams')">
+                        {{ __('Exam') }}
+                    </x-nav-link>
                     <x-nav-link :href="route('examinees')" :active="request()->routeIs('examinees')">
                         {{ __('Examinee') }}
                     </x-nav-link>
@@ -93,9 +93,6 @@
 
             {{-- Admin Only --}}
             @if (Auth::user()->role < 1)
-            <x-responsive-nav-link :href="route('admin.exams')" :active="request()->routeIs('admin.exams')">
-                {{ __('Exam') }}
-            </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('users')" :active="request()->routeIs('users')">
                 {{ __('Users') }}
             </x-responsive-nav-link>
@@ -103,6 +100,9 @@
 
             {{-- Staff --}}
             @if (Auth::user()->role < 2)
+            <x-responsive-nav-link :href="route('admin.exams')" :active="request()->routeIs('admin.exams')">
+                {{ __('Exam') }}
+            </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('examinees')" :active="request()->routeIs('examinees')">
                 {{ __('Examinee') }}
             </x-responsive-nav-link>
@@ -113,7 +113,7 @@
 
             {{-- Examinee --}}
             @if (Auth::user()->role == 2)
-            <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('login')">
+            <x-responsive-nav-link :href="route('exams')" :active="request()->routeIs('login')">
                 {{ __('Exam') }}
             </x-responsive-nav-link>
             @endif

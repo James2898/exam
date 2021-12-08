@@ -124,7 +124,7 @@
                 </ol>
             </div>
             <div class="bg-green-400 text-right text-white w-full px-4 py-2 hover:bg-green-500">
-                <a href="{{ route('subjects')}}">Take Exam</a>
+                <a href="{{ route('exams')}}">Take Exam</a>
             </div>
         </div>
     </div>

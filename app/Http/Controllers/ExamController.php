@@ -26,15 +26,18 @@ class ExamController extends Controller
     public function index()
     {
         $exam_id = Examinee::where('user_id',Auth::user()->id)->get()[0]->exam_id;
-
         $exam = DB::table('exams')
                 ->where('id',$exam_id)    
                 ->first();
+
+        if(!$exam) {
+            return view('exams.index',compact('exam'));
+        }
         
         $exam_startdatetime = null;
         $exam_enddatetime = null;
         $now_datetime = null;
-        if ($exam->status != 4){
+        if ($exam && $exam->status != 4){
             // dd($exam);
             $exam_startdatetime = Carbon::parse($exam->start_datetime);
             $exam_enddatetime = Carbon::parse($exam->start_datetime);
