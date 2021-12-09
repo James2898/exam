@@ -33,6 +33,11 @@
                         {{ __('Subject') }}
                     </x-nav-link>
                     @endif
+                    @if (Auth::user()->role < 1)
+                    <x-nav-link :href="route('criterias')" :active="request()->routeIs('criterias')">
+                        {{ __('Criteria') }}
+                    </x-nav-link>
+                    @endif
                     {{-- Examinee --}}
                     @if (Auth::user()->role == 2)
                     <x-nav-link :href="route('exams')" :active="request()->routeIs('exams')">
@@ -93,6 +98,9 @@
 
             {{-- Admin Only --}}
             @if (Auth::user()->role < 1)
+            <x-responsive-nav-link :href="route('exams')" :active="request()->routeIs('login')">
+                {{ __('Criteria') }}
+            </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('users')" :active="request()->routeIs('users')">
                 {{ __('Users') }}
             </x-responsive-nav-link>
@@ -113,7 +121,7 @@
 
             {{-- Examinee --}}
             @if (Auth::user()->role == 2)
-            <x-responsive-nav-link :href="route('exams')" :active="request()->routeIs('login')">
+            <x-responsive-nav-link :href="route('exams')" :active="request()->routeIs('exams')">
                 {{ __('Exam') }}
             </x-responsive-nav-link>
             @endif

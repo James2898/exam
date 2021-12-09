@@ -20,6 +20,7 @@ use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\AdminExamController;
 use App\Http\Controllers\ExamController;
+use App\Http\Controllers\CriteriaController;
 
 Route::group(['middleware' => 'auth'], function(){
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
@@ -82,6 +83,8 @@ Route::group(['middleware' => 'auth'], function(){
         Route::get('/publish/{id}',[AdminExamController::class, 'publish'])->name('admin.exams.publish');
         Route::get('/examinee/results/{id}',[ExamineeController::class, 'examinee_results'])->name('examinee.results');
 
+        Route::get('/criterias',[CriteriaController::class,'index'])->name('criterias');
+        Route::get('/criterias/edit',[CriteriaController::class,'edit'])->name('criterias.edit');
     });
 
     Route::group(['middleware' => 'role:2'], function() {
