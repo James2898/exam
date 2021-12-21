@@ -232,7 +232,7 @@ class ExamineeController extends Controller
             Examinee::find($request->id)->update(['password' => $validated]);
         }
 
-        return redirect(route('examinees.edit',$request->id))->with('alert', 'Examinee Updated!');
+        return redirect(route('examinees.edit',$request->id))->with('alert', 'Profile Updated!');
     }
 
     public function examinee_results($examinee_id)

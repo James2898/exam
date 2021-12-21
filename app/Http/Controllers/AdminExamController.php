@@ -199,11 +199,11 @@ class AdminExamController extends Controller
         
         $start_datetime = $request->schedule_date." ".$request->schedule_time;
         $end_datetime = new DateTime($start_datetime);
-        $subject_count = count(explode(', ',$request->exam_subjects));
+        $subject_count = count(explode(', ',$request->subjects));
 
         // dd($request);
         $exam = Exam::create([
-            'subject_id'    => $request->exam_subjects,
+            'subject_id'    => $request->subjects,
             'description'   => $request->description,
             'duration'      => $request->duration,
             'qty'           => $request->qty,
@@ -279,19 +279,22 @@ class AdminExamController extends Controller
     {
         $examinee_id = $request->examinee_id;
         $exam_id = $request->exam_id;
-        $examinee = Examinee::find($examinee_id);
+        $examinee = Examinee::where('user_id','=',$examinee_id)->first();
         if($examinee) {
             if ($examinee->exam_id == $exam_id) {
                 $examinee->update([
                     'exam_id'   => 0
                 ]);
+                return redirect(route('admin.exams.exam_examinees',compact('exam_id')))->with('alert', 'Examinee Unassigned!');
             }else {
+
                 $examinee->update([
                     'exam_id'   => $exam_id
                 ]);
+                return redirect(route('admin.exams.exam_examinees',compact('exam_id')))->with('alert', 'Examinee Assigned!');
             }
         }
-        return redirect(route('admin.exams.exam_examinees',compact('exam_id')))->with('alert', 'Examinee assigned!');
+        return redirect(route('admin.exams.exam_examinees',compact('exam_id')))->with('alert', 'Examinee Assigned!');
     }
 
     public function publish($id)

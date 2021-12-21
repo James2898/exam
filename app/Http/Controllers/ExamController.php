@@ -88,8 +88,10 @@ class ExamController extends Controller
                 ->get();
 
             $exam_subjects = DB::table('forms')
-                ->selectRaw('subject_id as subject_id, count(subject_id) as subject_count')
-                ->groupBy('subject_id')
+                ->selectRaw('forms.subject_id as subject_id, count(forms.subject_id) as subject_count')
+                ->where('forms.exam_id','=',$exam_id)
+                ->join('exams','exams.id','=','forms.exam_id')
+                ->groupBy('forms.subject_id')
                 ->get();
 
             $examinee_form = [];

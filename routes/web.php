@@ -85,6 +85,7 @@ Route::group(['middleware' => 'auth'], function(){
 
         Route::get('/criterias',[CriteriaController::class,'index'])->name('criterias');
         Route::get('/criterias/edit',[CriteriaController::class,'edit'])->name('criterias.edit');
+        Route::post('/criterias/update',[CriteriaController::class,'update'])->name('criterias.update');
     });
 
     Route::group(['middleware' => 'role:2'], function() {

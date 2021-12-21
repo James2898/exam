@@ -23,7 +23,6 @@
                 <th class="py-3 px-6 text-center">Code</th>
                 <th class="py-3 px-6 text-center">Name</th>
                 <th class="py-3 px-6 text-center">Created On</th>
-                <th class="py-3 px-6 text-center">Status</th>
                 <th class="py-3 px-6 text-center">Actions</th>
             </tr>
         </thead>
@@ -45,17 +44,6 @@
                     <span>{{date('Y-m-d', strtotime($subject->created_at));}}</span>
                     
                 </div>
-                </td>
-                <td class="py-3 px-6 text-center">
-                    @if ($subject->status == Config::get('constants.subject.status.active.no'))
-                    <a href="{{ route('subjects.deactivate',$subject->id) }}" class="btn mx-auto lg:mx-0 hover:underline bg-green-500 text-white font-bold rounded py-1 px-4 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out" onclick="return confirm('Are you sure to deactivate this subject ?')">
-                        {{Config::get('constants.subject.status.active.name')}}
-                    </a>
-                    @else
-                    <a href="{{ route('subjects.activate',$subject->id) }}" class="btn mx-auto lg:mx-0 hover:underline bg-red-500 text-white font-bold rounded py-1 px-4 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out" onclick="return confirm('Are you sure to activate this subject ?')">
-                        {{Config::get('constants.subject.status.inactive.name')}}
-                    </a>
-                    @endif
                 </td>
                 <td class="py-3 px-6 text-center">
                 <div class="flex item-center justify-center">

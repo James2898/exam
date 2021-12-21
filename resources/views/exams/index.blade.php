@@ -24,7 +24,7 @@
                     <th class="py-3 px-6 text-center">Actions</th>
                 </tr>
             </thead>
-            @if ($exam)
+            @if ($exam && $exam->status > 1)
             <tbody class="text-gray-600 text-sm font-light">
               <tr class="border-b border-gray-200 hover:bg-green-100">
                   <td class="py-3 px-6 text-center">

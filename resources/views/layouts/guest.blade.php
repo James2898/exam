@@ -12,12 +12,23 @@
 
         <!-- Styles -->
         <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+        <style>
+            #idbg {
+                background-image: url("{{ asset('img/bg.jpg') }}");
+                height: 100%;
+                width: 100%;
 
+                background-position: center;
+                background-repeat: no-repeat;
+                background-size: cover;
+                background-attachment: fixed;
+            }
+        </style>
         <!-- Scripts -->
         <script src="{{ asset('js/app.js') }}" defer></script>
     </head>
-    <body>
-        <div class="font-sans text-gray-900 antialiased">
+    <body class="font-sans antialiased" >
+        <div id="idbg">
             {{ $slot }}
         </div>
     </body>
