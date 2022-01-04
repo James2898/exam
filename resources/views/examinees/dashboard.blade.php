@@ -37,6 +37,7 @@
 						</td>
 						<td class="py-3 px-6 text-center justify-center">
                             <?php $is_recommended = true  ?>
+                            @if(isset($exam_criteria[$examinee->college]))
                             @foreach ($examinee_criteria[$examinee->college][$examinee->course] as $subject_id => $target_score)
                                 {{-- IF EXAMINEES GRADE PASSED THE REQUIRED SUBJECT --}}
                                 @if(isset($exam_questions[$subject_id]) && $target_score > $exam_questions[$subject_id]['average'])
@@ -44,6 +45,7 @@
                                     @break
                                 @endif
                             @endforeach
+                            @endif
 
                             @if ($is_recommended)
                                 <span class="bg-yellow-200 text-gray-600 py-1 px-3 rounded-full text-xs">
